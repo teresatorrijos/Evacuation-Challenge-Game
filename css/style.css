@@ -1,0 +1,34 @@
+
+body {
+  background-color:#FFF1EB;
+  font-family: Helvetica, Times, serif;
+}
+
+h1 {
+  color: black;
+  font-size: 35px;
+  font-weight: lighter;
+}
+
+.room {
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  display: inline-block;
+  border: 1px black solid;
+}
+
+.unbreakable-wall {
+  width: 25px;
+  height: 100px;
+  background-color: black;
+  display: inline-block;
+  border: 1px white solid;
+}
+
+.quantity-people {
+  font-size: 20px;
+  text-align: center;
+  line-height: 50px;
+  color: black;
+}
