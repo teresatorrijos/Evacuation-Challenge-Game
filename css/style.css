@@ -1,6 +1,5 @@
-
 body {
-  background-color:#FFF1EB;
+  background-color: #FFF1EB;
   font-family: Helvetica, Times, serif;
 }
 
@@ -48,13 +47,13 @@ h1 {
 }
 
 .quantity-people {
-  font-size: 10px;
+  font-size: 15px;
   text-align: center;
   color: black;
 }
 
 .row {
- height: 100px;
+  height: 100px;
 }
 
 .row-wall {
@@ -62,18 +61,17 @@ h1 {
 }
 
 .horizontal-exit {
-  background-color: red;
+  background: transparent;
   width: 100px;
   height: 25px;
   display: inline-block;
 }
 
 .vertical-exit {
-  background-color: red;
+  background: transparent;
   width: 25px;
   height: 100px;
   display: inline-block;
-  margin-left: 1∫0px;
 }
 
 .vertical-breakable {

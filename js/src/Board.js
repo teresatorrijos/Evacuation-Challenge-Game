@@ -13,7 +13,7 @@ var Board = function(plan) {
   this.potentialExit = [this.array[0][(this.array.length-1)/2], this.array[(this.array.length-1)/2][this.array.length-1], this.array[this.array.length-1][(this.array.length-1)/2], this.array[(this.array.length-1)/2][0]];
   this.interiorWalls = [];
   this.breakableWalls = [];
-  this.partition = 12;
+  this.partition = 15;
   this.rooms = [];
   this.maximunCapacity = 20;
 };
@@ -32,13 +32,12 @@ Board.prototype.randomReleaseWalls = function() {
   }
   for (var y = 0; y < this.breakableWalls.length; y++) {
     this.breakableWalls[y].canBreak = true;
-  } console.log(this.breakableWalls);
+  }
 };
 
 Board.prototype.randomExit = function() {
   var randomIndex = Math.floor(Math.random() * this.potentialExit.length);
   this.potentialExit[randomIndex].isExit = true;
-  console.log(this.potentialExit[randomIndex]);
 };
 
 Board.prototype.fillRooms = function() {
@@ -57,8 +56,6 @@ Board.prototype.fillRooms = function() {
   for (var y=0; y<this.rooms.length; y++) {
     this.rooms[y].numberPeople = randomQuantities[y];
   }
-  console.log(randomQuantities);
-  console.log(this.rooms);
 };
 
 function printQuantityPeople() {
