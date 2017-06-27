@@ -12,17 +12,18 @@ h1 {
 
 #board {
   position: absolute;
-  top: 200px;
+  top: 150px;
   left: 200px;
   width: 1500px;
   height: 1500px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .room {
   width: 100px;
   height: 100px;
   display: inline-block;
-  margin: -2px;
 }
 
 .vertical-wall {
@@ -30,7 +31,6 @@ h1 {
   height: 100px;
   background-color: black;
   display: inline-block;
-  margin: -2px;
 }
 
 .square {
@@ -38,7 +38,6 @@ h1 {
   height: 25px;
   background-color: black;
   display: inline-block;
-  margin: -2px;
 }
 
 .horizontal-wall {
@@ -46,18 +45,51 @@ h1 {
   height: 25px;
   background-color: black;
   display: inline-block;
-  margin: -2px;
 }
 
 .quantity-people {
-  font-size: 20px;
+  font-size: 10px;
   text-align: center;
-  line-height: 50px;
   color: black;
 }
 
-.row{
-  display: block;
-  padding: 0px;
-  margin: 0px;
+.row {
+ height: 100px;
+}
+
+.row-wall {
+  height: 25px;
+}
+
+.horizontal-exit {
+  background-color: red;
+  width: 100px;
+  height: 25px;
+  display: inline-block;
+}
+
+.vertical-exit {
+  background-color: red;
+  width: 25px;
+  height: 100px;
+  display: inline-block;
+  margin-left: 1∫0px;
+}
+
+.vertical-breakable {
+  background-color: blue;
+  width: 25px;
+  height: 100px;
+  display: inline-block;
+}
+
+.horizontal-breakable {
+  width: 100px;
+  height: 25px;
+  display: inline-block;
+  background-color: blue;
+}
+
+.disabled {
+  background: transparent;
 }

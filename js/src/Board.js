@@ -1,24 +1,16 @@
 var Room = function() {
   this.type = "room";
-  this.numberPeople= 0;
+  this.numberPeople = 0;
 };
 var Wall = function() {
-  this.type= "wall";
-  this.canBreak= false;
-  this.isExit= false;
+  this.type = "wall";
+  this.canBreak = false;
+  this.isExit = false;
 };
 
-var Board = function() {
-  this.array = [
-    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
-    [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
-    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
-    [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
-    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
-    [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
-    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
-  ];
-  this.potentialExit = [this.array[0][3], this.array[3][6], this.array[6][3], this.array[3][0]];
+var Board = function(plan) {
+  this.array = plan;
+  this.potentialExit = [this.array[0][(this.array.length-1)/2], this.array[(this.array.length-1)/2][this.array.length-1], this.array[this.array.length-1][(this.array.length-1)/2], this.array[(this.array.length-1)/2][0]];
   this.interiorWalls = [];
   this.breakableWalls = [];
   this.partition = 12;
@@ -78,6 +70,3 @@ Board.prototype.start = function() {
   this.randomExit();
   this.fillRooms();
 };
-
-var board = new Board();
-board.start();
