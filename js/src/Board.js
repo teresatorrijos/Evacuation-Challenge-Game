@@ -1,46 +1,32 @@
-var R = {
-  type: "room",
-  numberPeople: 0
+var Room = function() {
+  this.type = "room";
+  this.numberPeople= 0;
 };
-var W = {
-  type: "wall",
-  canBreak: true,
-  isExit: false
+var Wall = function() {
+  this.type= "wall";
+  this.canBreak= false;
+  this.isExit= false;
 };
 
 var Board = function() {
   this.array = [
-    [W, W, W, W, W, W, W],
-    [W, R, W, R, W, R, W],
-    [W, W, W, W, W, W, W],
-    [W, R, W, R, W, R, W],
-    [W, W, W, W, W, W, W],
-    [W, R, W, R, W, R, W],
-    [W, W, W, W, W, W, W],
+    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
+    [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
+    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
+    [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
+    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
+    [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
+    [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()],
   ];
   this.potentialExit = [this.array[0][3], this.array[3][6], this.array[6][3], this.array[3][0]];
-  this.perimeter = [];
   this.interiorWalls = [];
-  this.unbreakableWalls = [];
-  this.loadBearingWalls = 4;
+  this.breakableWalls = [];
+  this.partition = 12;
   this.rooms = [];
   this.maximunCapacity = 20;
 };
 
-
-Board.prototype.freezePerimeter = function() {
-  for (var j = 0; j < this.array.length; j += this.array.length - 1) {
-    for (var i = 0; i < this.array[j].length; i++) {
-      this.perimeter.push(this.array[j][i]);
-      this.perimeter.push(this.array[i][j]);
-    }
-  }
-  for (var x = 0; x < this.perimeter.length; x++) {
-    this.perimeter[x].canBreak = false;
-  }
-};
-
-Board.prototype.randomFreezeWalls = function() {
+Board.prototype.randomReleaseWalls = function() {
   for (var i = 1; i < this.array.length - 1; i++) {
     for (var j = 1; j < this.array[i].length - 1; j++) {
       if (this.array[i][j].type === "wall") {
@@ -48,18 +34,19 @@ Board.prototype.randomFreezeWalls = function() {
       }
     }
   }
-  for (var x = 0; x < this.loadBearingWalls; x++) {
+  for (var x = 0; x < this.partition; x++) {
     var randomIndex = Math.floor(Math.random() * this.interiorWalls.length);
-    this.unbreakableWalls.push(this.interiorWalls[randomIndex]);
+    this.breakableWalls.push(this.interiorWalls[randomIndex]);
   }
-  for (var y = 0; y < this.unbreakableWalls.length; y++) {
-    this.unbreakableWalls[y].canBreak = false;
-  }
+  for (var y = 0; y < this.breakableWalls.length; y++) {
+    this.breakableWalls[y].canBreak = true;
+  } console.log(this.breakableWalls);
 };
 
 Board.prototype.randomExit = function() {
   var randomIndex = Math.floor(Math.random() * this.potentialExit.length);
   this.potentialExit[randomIndex].isExit = true;
+  console.log(this.potentialExit[randomIndex]);
 };
 
 Board.prototype.fillRooms = function() {
@@ -82,12 +69,15 @@ Board.prototype.fillRooms = function() {
   console.log(this.rooms);
 };
 
+function printQuantityPeople() {
+  $("quantity-people").html(this.rooms.numberPeople);
+}
+
 Board.prototype.start = function() {
-  this.randomFreezeWalls();
-  this.freezePerimeter();
+  this.randomReleaseWalls();
   this.randomExit();
   this.fillRooms();
 };
 
-// var board = new Board();
-// board.fillRooms();
+var board = new Board();
+board.start();

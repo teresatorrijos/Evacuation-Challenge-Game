@@ -10,20 +10,43 @@ h1 {
   font-weight: lighter;
 }
 
+#board {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  width: 1500px;
+  height: 1500px;
+}
+
 .room {
   width: 100px;
   height: 100px;
-  background-color: yellow;
   display: inline-block;
-  border: 1px black solid;
+  margin: -2px;
 }
 
-.unbreakable-wall {
+.vertical-wall {
   width: 25px;
   height: 100px;
   background-color: black;
   display: inline-block;
-  border: 1px white solid;
+  margin: -2px;
+}
+
+.square {
+  width: 25px;
+  height: 25px;
+  background-color: black;
+  display: inline-block;
+  margin: -2px;
+}
+
+.horizontal-wall {
+  width: 100px;
+  height: 25px;
+  background-color: black;
+  display: inline-block;
+  margin: -2px;
 }
 
 .quantity-people {
@@ -31,4 +54,10 @@ h1 {
   text-align: center;
   line-height: 50px;
   color: black;
+}
+
+.row{
+  display: block;
+  padding: 0px;
+  margin: 0px;
 }
