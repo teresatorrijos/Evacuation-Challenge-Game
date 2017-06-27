@@ -21,5 +21,3 @@ var plan2 = [
   [new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall(), new Room(), new Wall()],
   [new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall(), new Wall()]
 ];
-
-console.log(plan1)

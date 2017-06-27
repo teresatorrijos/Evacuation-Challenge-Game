@@ -3,10 +3,6 @@ function RenderBoard() {
 
 }
 
-function renderRandomPeople() {
-  $('.quantity-people').html(paddle1.scoredPoints);
-}
-
 function RenderGame() {
 
 }
@@ -23,7 +19,10 @@ $(document).ready(function() {
       html += '</div>';
       if (board.array[i][j].canBreak === true) {
         html += '<div class= "horizontal-breakable" row='+i+' col='+(j+1)+'>';
+        html += '<div class= "horizontal-partition">';
         html += '</div>';
+        html += '</div>';
+        //$('<div>').addClass('horizontal-breakable').attr({ row: i, col: (j+1) })
       } else if (board.array[i][j + 1].isExit === true) {
         html += '<div class= "horizontal-exit">';
         html += '</div>';
@@ -39,6 +38,8 @@ $(document).ready(function() {
     for (var x = 0; x < board.array[i].length - 1; x += 2) {
       if (board.array[i + 1][x].canBreak === true) {
         html += '<div class= "vertical-breakable" row='+(i+1)+' col='+x+'>';
+        html += '<div class= "vertical-partition">';
+        html += '</div>';
         html += '</div>';
       } else if (board.array[i + 1][x].isExit === true) {
         html += '<div class= "vertical-exit">';
@@ -77,14 +78,32 @@ $(document).ready(function() {
   html += '<div class= "square">';
   html += '</div>';
   document.getElementById('board').innerHTML = html;
-  $(".horizontal-breakable").click(function(e) {
+  $(".horizontal-partition").click(function(e) {
     $(this).toggleClass("disabled");
-    console.log(e.target.attributes.row, e.target.attributes.col)
+    var col = parseInt($(this).parent().attr("col"));
+    var row = parseInt($(this).parent().attr("row"));
+    var topRow = board.array[row - 1][col].numberPeople;
+    var botRow = board.array[row + 1][col].numberPeople;
+    if(row < board.exit.row) {
+      botRow += topRow;
+      topRow = 0;
+    } else {
+      topRow += botRow;
+      botRow = 0;
+    }
   });
-  $(".vertical-breakable").click(function(e) {
+  $(".vertical-partition").click(function(e) {
     $(this).toggleClass("disabled");
-    console.log(e.target.attributes.row, e.target.attributes.col)
+    var col = parseInt($(this).parent().attr("col"));
+    var row = parseInt($(this).parent().attr("row"));
+    var leftCol = board.array[row][col - 1].numberPeople;
+    var rightCol = board.array[row][col + 1].numberPeople;
+    if(col < board.exit.col) {
+      rightCol += leftCol;
+      leftCol = 0;
+    } else {
+      leftCol += rightCol;
+      rightCol = 0;
+    }
   });
-
-
 });

@@ -10,12 +10,14 @@ var Wall = function() {
 
 var Board = function(plan) {
   this.array = plan;
+  this.exit = {};
   this.potentialExit = [this.array[0][(this.array.length-1)/2], this.array[(this.array.length-1)/2][this.array.length-1], this.array[this.array.length-1][(this.array.length-1)/2], this.array[(this.array.length-1)/2][0]];
   this.interiorWalls = [];
   this.breakableWalls = [];
   this.partition = 15;
   this.rooms = [];
   this.maximunCapacity = 20;
+  this.exit = {};
 };
 
 Board.prototype.randomReleaseWalls = function() {
@@ -38,6 +40,8 @@ Board.prototype.randomReleaseWalls = function() {
 Board.prototype.randomExit = function() {
   var randomIndex = Math.floor(Math.random() * this.potentialExit.length);
   this.potentialExit[randomIndex].isExit = true;
+  var exitCoordinates = [{row : 0, col: (this.array.length-1)/2}, {row : (this.array.length-1)/2, col : this.array.length-1}, {row : this.array.length-1, col : (this.array.length-1)/2}, {row : (this.array.length-1)/2, col : 0}];
+  this.exit = exitCoordinates[randomIndex];
 };
 
 Board.prototype.fillRooms = function() {
