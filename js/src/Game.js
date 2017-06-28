@@ -1,28 +1,16 @@
-function RenderBoard() {
 
-
-}
-
-function RenderGame() {
-
-}
-
-var board;
-$(document).ready(function() {
-  board = new Board(plan2);
+function renderBoard() {
   var html = '';
-  board.start();
   for (var i = 0; i < board.array.length - 1; i += 2) {
     html += '<div class= "row-wall">';
     for (var j = 0; j < board.array[i].length - 1; j += 2) {
       html += '<div class= "square">';
       html += '</div>';
       if (board.array[i][j].canBreak === true) {
-        html += '<div class= "horizontal-breakable" row='+i+' col='+(j+1)+'>';
+        html += '<div class= "horizontal-breakable" row=' + i + ' col=' + (j + 1) + '>';
         html += '<div class= "horizontal-partition">';
         html += '</div>';
         html += '</div>';
-        // var boxy = $('<div>').addClass('horizontal-breakable').attr({ row: i, col: (j+1) })
       } else if (board.array[i][j + 1].isExit === true) {
         html += '<div class= "horizontal-exit">';
         html += '</div>';
@@ -37,7 +25,7 @@ $(document).ready(function() {
     html += '<div class= "row">';
     for (var x = 0; x < board.array[i].length - 1; x += 2) {
       if (board.array[i + 1][x].canBreak === true) {
-        html += '<div class= "vertical-breakable" row='+(i+1)+' col='+x+'>';
+        html += '<div class= "vertical-breakable" row=' + (i + 1) + ' col=' + x + '>';
         html += '<div class= "vertical-partition">';
         html += '</div>';
         html += '</div>';
@@ -49,7 +37,7 @@ $(document).ready(function() {
         html += '</div>';
       }
       html += '<div class= "room">';
-      html += '<div class= "quantity-people">';
+      html += '<div class= "quantity-people" id="' + (i + 1) +'-'+ (x +1) + '">';
       html += board.array[i + 1][x + 1].numberPeople;
       html += '</div>';
       html += '</div>';
@@ -77,38 +65,30 @@ $(document).ready(function() {
   }
   html += '<div class= "square">';
   html += '</div>';
-  // board.printQuantityPeople();
   document.getElementById('board').innerHTML = html;
+}
+
+var board;
+$(document).ready(function() {
+  board = new Board(plan2);
+  board.start();
+  renderBoard();
   $(".horizontal-partition").click(function(e) {
     $(this).toggleClass("disabled");
     var col = parseInt($(this).parent().attr("col"));
     var row = parseInt($(this).parent().attr("row"));
-    var topRow = board.array[row - 1][col].numberPeople;
-    var botRow = board.array[row + 1][col].numberPeople;
-    if(row < board.exit.row) {
-      botRow += topRow;
-      topRow = 0;
-    } else {
-      topRow += botRow;
-      botRow = 0;
-    } console.log(topRow);
-    console.log(botRow7);
-      // board.printQuantityPeople();
+    this.parentElement.isOpen = true;
+    board.horMove(row, col);
+    board.printQuantityPeople();
   });
+
   $(".vertical-partition").click(function(e) {
     $(this).toggleClass("disabled");
     var col = parseInt($(this).parent().attr("col"));
     var row = parseInt($(this).parent().attr("row"));
-    var leftCol = board.array[row][col - 1].numberPeople;
-    var rightCol = board.array[row][col + 1].numberPeople;
-    if(col < board.exit.col) {
-      rightCol += leftCol;
-      leftCol = 0;
-    } else {
-      leftCol += rightCol;
-      rightCol = 0;
-    } console.log(leftCol);
-      console.log(rightCol);
-      // board.printQuantityPeople();
+    this.parentElement.isOpen = true;
+    board.verMove(row, col);
+    board.printQuantityPeople();
   });
+
 });

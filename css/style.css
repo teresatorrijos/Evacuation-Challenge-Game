@@ -23,7 +23,8 @@ h1 {
   width: 100px;
   height: 100px;
   display: inline-block;
-  
+  line-height: 95px;
+  vertical-align: text-bottom;
 }
 
 .vertical-wall {
