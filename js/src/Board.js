@@ -62,9 +62,15 @@ Board.prototype.fillRooms = function() {
   }
 };
 
-function printQuantityPeople() {
-  $("quantity-people").html(this.rooms.numberPeople);
-}
+Board.prototype.printQuantityPeople = function() {
+  // var numbers = [];
+  // var quantities = document.getElementsByClassName("quantity-people");
+  // for(var i=0; i<this.rooms.length; i++) {
+  //   numbers.push(quantities[i].numberPeople);
+  // }
+  //
+  // $("quantity-people").html(this.rooms[i].numberPeople);
+};
 
 Board.prototype.start = function() {
   this.randomReleaseWalls();

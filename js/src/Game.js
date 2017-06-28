@@ -22,7 +22,7 @@ $(document).ready(function() {
         html += '<div class= "horizontal-partition">';
         html += '</div>';
         html += '</div>';
-        //$('<div>').addClass('horizontal-breakable').attr({ row: i, col: (j+1) })
+        // var boxy = $('<div>').addClass('horizontal-breakable').attr({ row: i, col: (j+1) })
       } else if (board.array[i][j + 1].isExit === true) {
         html += '<div class= "horizontal-exit">';
         html += '</div>';
@@ -77,6 +77,7 @@ $(document).ready(function() {
   }
   html += '<div class= "square">';
   html += '</div>';
+  // board.printQuantityPeople();
   document.getElementById('board').innerHTML = html;
   $(".horizontal-partition").click(function(e) {
     $(this).toggleClass("disabled");
@@ -90,7 +91,9 @@ $(document).ready(function() {
     } else {
       topRow += botRow;
       botRow = 0;
-    }
+    } console.log(topRow);
+    console.log(botRow7);
+      // board.printQuantityPeople();
   });
   $(".vertical-partition").click(function(e) {
     $(this).toggleClass("disabled");
@@ -104,6 +107,8 @@ $(document).ready(function() {
     } else {
       leftCol += rightCol;
       rightCol = 0;
-    }
+    } console.log(leftCol);
+      console.log(rightCol);
+      // board.printQuantityPeople();
   });
 });
