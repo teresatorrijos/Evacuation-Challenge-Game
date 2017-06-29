@@ -20,6 +20,23 @@ var Board = function(plan) {
   this.rooms = [];
   this.maximumCapacity = 20;
   this.hallExit = {};
+  this.tries = 0;
+};
+
+Board.prototype.canClick = function() {
+  if (this.array.length === 7) {
+    if (this.tries < 3) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (this.tries < 6) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 };
 
 Board.prototype._generatePotentialExit = function() {
@@ -108,7 +125,6 @@ Board.prototype._generateHall = function() {
       this.hallExit = this.array[this._middleCell()][1];
       break;
   }
-  console.log(this.hallExit);
 };
 
 Board.prototype._isRoom = function(i, j) {
@@ -157,25 +173,25 @@ Board.prototype.checkWall = function(row, col) {
 };
 
 Board.prototype.horMove = function(row, col) {
-  if (row < board.exit.row) {
-    board.array[row + 1][col].numberPeople += board.array[row - 1][col].numberPeople;
-    board.array[row - 1][col].numberPeople = 0;
+  if (row < this.exit.row) {
+    this.array[row + 1][col].numberPeople += this.array[row - 1][col].numberPeople;
+    this.array[row - 1][col].numberPeople = 0;
     return "down";
   } else {
-    board.array[row - 1][col].numberPeople += board.array[row + 1][col].numberPeople;
-    board.array[row + 1][col].numberPeople = 0;
+    this.array[row - 1][col].numberPeople += this.array[row + 1][col].numberPeople;
+    this.array[row + 1][col].numberPeople = 0;
     return "up";
   }
 };
 
 Board.prototype.verMove = function(row, col) {
-  if (col < board.exit.col) {
-    board.array[row][col + 1].numberPeople += board.array[row][col - 1].numberPeople;
-    board.array[row][col - 1].numberPeople = 0;
-    return "right"; //
+  if (col < this.exit.col) {
+    this.array[row][col + 1].numberPeople += this.array[row][col - 1].numberPeople;
+    this.array[row][col - 1].numberPeople = 0;
+    return "right";
   } else {
-    board.array[row][col - 1].numberPeople += board.array[row][col + 1].numberPeople;
-    board.array[row][col + 1].numberPeople = 0;
+    this.array[row][col - 1].numberPeople += this.array[row][col + 1].numberPeople;
+    this.array[row][col + 1].numberPeople = 0;
     return "left";
   }
 };

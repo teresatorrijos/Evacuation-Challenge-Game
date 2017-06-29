@@ -1,5 +1,5 @@
 
-function renderBoard() {
+function renderBoard(board) {
   var html = '';
   var html2 = '';
   for (var i = 0; i < board.array.length - 1; i += 2) {
@@ -77,4 +77,10 @@ function renderBoard() {
   html2 += '</div>';
   document.getElementById('board').innerHTML = html;
   document.getElementById('right-panel').innerHTML = html2;
+}
+
+function renderInitialScreen() {
+  $("#initial").append("<div></div>").text("Choose a level to start").addClass("initial-screen");
+  $(".initial-screen").append("<button id='level1'> Level 1 </button>");
+  $(".initial-screen").append("<button id='level2'> Level 2 </button>");
 }
