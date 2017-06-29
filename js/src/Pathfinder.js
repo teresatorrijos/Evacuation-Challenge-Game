@@ -1,16 +1,16 @@
-var Path = function(startArray, endArray, board){
+var Path = function(startArray, endArray, plan){
 
   this.result = [];
   this.times = 0;
 
   var grid = [];
-  for (var y = 0; y < board.rows; y++ ) {
-    grid[y] = [];
-    for (var x = 0; x < board.cols; x++ ) {
-      if (board.map[y][x] == "*" || (board.map[y][x] == "0") || board.map[y][x] == "1") {
-        grid[y][x] = 1;
+  for (var i = 0; i < plan.length; i++ ) {
+    grid[i] = [];
+    for (var j = 0; j < plan[i].length; j++ ) {
+      if (plan.map[i][j].type == "room" || plan.map[i][j].isOpen === true) {
+        grid[i][j] = 1;
       } else {
-        grid[y][x] = 0;
+        grid[i][j] = 0;
       }
     }
   }

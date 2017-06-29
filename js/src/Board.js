@@ -15,10 +15,11 @@ var Board = function(plan) {
   this.potentialExit = this._generatePotentialExit();
   this.interiorWalls = [];
   this.breakableWalls = [];
-  this.partition = this.array.length ** 2;
+  this.partition = this.array.length**2;
   this.rooms = [];
   this.maximumCapacity = 20;
   this.exit = {};
+  // this.end = this._generateEnd();
 };
 
 Board.prototype._generatePotentialExit = function(){
@@ -62,19 +63,32 @@ Board.prototype._randomExit = function() {
   this.potentialExit[randomIndex].isExit = true;
   var exitCoordinates = [{
     row: 0,
-    col: (this.array.length - 1) / 2
+    col: this._middleCell()
   }, {
-    row: (this.array.length - 1) / 2,
-    col: this.array.length - 1
+    row: this._middleCell(),
+    col: this._lastCell(),
   }, {
-    row: this.array.length - 1,
-    col: (this.array.length - 1) / 2
+    row: this._lastCell(),
+    col: this._middleCell()
   }, {
-    row: (this.array.length - 1) / 2,
+    row: this._middleCell(),
     col: 0
   }];
   this.exit = exitCoordinates[randomIndex];
 };
+
+// Board.prototype._generateEnd = function() {
+  // switch (this.exit) {
+  //   case {
+  //     row: 0,
+  //     col: this._middleCell()
+  //   }:
+  //
+  //     break;
+  //   default:
+  //
+  // }
+// };
 
 Board.prototype._isRoom = function(i, j){
   return this.array[i][j].type === "room";
