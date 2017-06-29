@@ -135,6 +135,43 @@ h1 {
   text-align: center;
 }
 
+.score b {
+  font-size: 35px;
+}
+
 #player2 {
   margin-top: 30px;
+}
+
+.initial-screen {
+  font-size: 25px;
+  border: 1px black solid;
+  width: 320px;
+  height: 170px;
+  text-align: center;
+  padding: 100px 10px;
+  position: absolute;
+  top: 150px;
+  left: 30px;
+}
+
+button {
+  padding: 10px 12px;
+  font-size: 16px;
+  line-height: 2px;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px black solid;
+  color: black;
+  text-align: center;
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  background-color: #FFF1EB;
+  display: block;
+  margin: 30px auto;
+}
+
+#level1 {
+  margin-top: 60px;
 }
