@@ -19,25 +19,44 @@ var Board = function(plan) {
   this.partition = this.array.length ** 2;
   this.rooms = [];
   this.maximumCapacity = 20;
+  this.maxTries = 0;
   this.hallExit = {};
-  this.tries = 0;
+  this.maxTime = 0;
 };
 
-Board.prototype.canClick = function() {
+Board.prototype._calculateTries = function() {
   if (this.array.length === 7) {
-    if (this.tries < 3) {
-      return true;
-    } else {
-      return false;
-    }
+    this.maxTries = 3;
   } else {
-    if (this.tries < 6) {
-      return true;
-    } else {
-      return false;
-    }
+    this.maxTries = 6;
+  } 
+};
+
+Board.prototype._calculateTime = function() {
+  if (this.array.length === 7) {
+    this.maxTime = 5;
+  } else {
+    this.maxTime = 10;
   }
 };
+
+// Board.prototype.canClick = function() {
+//   if (this.array.length < 10) {
+//     if (this.tries < 3) {
+//       // console.log("hola")
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } else {
+//     if (this.tries < 6) {
+//       // console.log("hola")
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+// };
 
 Board.prototype._generatePotentialExit = function() {
   return [
@@ -201,4 +220,6 @@ Board.prototype.start = function() {
   this._randomExit();
   this._generateHall();
   this._fillRooms();
+  this._calculateTries();
+  this._calculateTime();
 };

@@ -1,18 +1,18 @@
 
-function renderBoard(board) {
+function renderBoard(plan) {
   var html = '';
   var html2 = '';
-  for (var i = 0; i < board.array.length - 1; i += 2) {
+  for (var i = 0; i < plan.array.length - 1; i += 2) {
     html += '<div class= "row-wall">';
-    for (var j = 0; j < board.array[i].length - 1; j += 2) {
+    for (var j = 0; j < plan.array[i].length - 1; j += 2) {
       html += '<div class= "square">';
       html += '</div>';
-      if (board.array[i][j].canBreak === true) {
+      if (plan.array[i][j].canBreak === true) {
         html += '<div class= "horizontal-breakable" row=' + i + ' col=' + (j + 1) + '>';
         html += '<div class= "horizontal-partition">';
         html += '</div>';
         html += '</div>';
-      } else if (board.array[i][j + 1].isExit === true) {
+      } else if (plan.array[i][j + 1].isExit === true) {
         html += '<div class= "horizontal-exit">';
         html += '</div>';
       } else {
@@ -24,13 +24,13 @@ function renderBoard(board) {
     html += '</div>';
     html += '</div>';
     html += '<div class= "row">';
-    for (var x = 0; x < board.array[i].length - 1; x += 2) {
-      if (board.array[i + 1][x].canBreak === true) {
+    for (var x = 0; x < plan.array[i].length - 1; x += 2) {
+      if (plan.array[i + 1][x].canBreak === true) {
         html += '<div class= "vertical-breakable" row=' + (i + 1) + ' col=' + x + '>';
         html += '<div class= "vertical-partition">';
         html += '</div>';
         html += '</div>';
-      } else if (board.array[i + 1][x].isExit === true) {
+      } else if (plan.array[i + 1][x].isExit === true) {
         html += '<div class= "vertical-exit">';
         html += '</div>';
       } else {
@@ -39,12 +39,12 @@ function renderBoard(board) {
       }
       html += '<div class= "room">';
       html += '<div class= "quantity-people" id="' + (i + 1) +'-'+ (x +1) + '">';
-      if (board.array[i + 1][x + 1].numberPeople !== 0){
-      html += board.array[i + 1][x + 1].numberPeople;}
+      if (plan.array[i + 1][x + 1].numberPeople !== 0){
+      html += plan.array[i + 1][x + 1].numberPeople;}
       html += '</div>';
       html += '</div>';
     }
-    if (board.array[i + 1][board.array.length - 1].isExit === true) {
+    if (plan.array[i + 1][plan.array.length - 1].isExit === true) {
       html += '<div class= "vertical-exit">';
       html += '</div>';
     } else {
@@ -54,10 +54,10 @@ function renderBoard(board) {
     html += '</div>';
   }
   html += '<div class= "row-wall">';
-  for (var y = 0; y < board.array[(board.array.length - 1)].length - 1; y += 2) {
+  for (var y = 0; y < plan.array[(plan.array.length - 1)].length - 1; y += 2) {
     html += '<div class= "square">';
     html += '</div>';
-    if (board.array[(board.array.length - 1)][y + 1].isExit === true) {
+    if (plan.array[(plan.array.length - 1)][y + 1].isExit === true) {
       html += '<div class= "horizontal-exit">';
       html += '</div>';
     } else {
