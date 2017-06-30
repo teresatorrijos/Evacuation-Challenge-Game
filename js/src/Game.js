@@ -59,7 +59,6 @@ Game.prototype.startNewGame = function() {
 
 Game.prototype.startGame = function(map, player) {
   map.start();
-  console.log(map)
   var counter = map.maxTime;
   renderBoard(map);
   var tries = 0;

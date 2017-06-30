@@ -13,7 +13,7 @@ var Board = function(plan) {
   this.array = plan;
   this.exit = {};
   this.positionExit = "";
-  // this.potentialExit = this._generatePotentialExit();
+  this.potentialExit = this._generatePotentialExit();
   this.interiorWalls = [];
   this.breakableWalls = [];
   this.partition = this.array.length ** 2;
@@ -79,9 +79,9 @@ Board.prototype._randomNumber = function(collection) {
 };
 
 Board.prototype._randomExit = function() {
-  for (var i=0; i<this.potentialExit.length; i++) {
-    this.potentialExit[i].isExit = false;
-  }
+  // for (var i=0; i<this.potentialExit.length; i++) {
+  //   this.potentialExit[i].isExit = false;
+  // }
   this.exit = {};
   var randomIndex = this._randomNumber(this.potentialExit);
   this.potentialExit[randomIndex].isExit = true;
@@ -204,7 +204,7 @@ Board.prototype.verMove = function(row, col) {
 };
 
 Board.prototype.start = function() {
-  this._generatePotentialExit();
+  // this._generatePotentialExit();
   this._randomReleaseWalls();
   this._randomExit();
   this._generateHall();
