@@ -24,14 +24,6 @@ var Board = function(plan) {
   this.maxTime = 0;
 };
 
-Board.prototype._calculateTries = function() {
-  if (this.array.length === 7) {
-    this.maxTries = 3;
-  } else {
-    this.maxTries = 6;
-  } 
-};
-
 Board.prototype._calculateTime = function() {
   if (this.array.length === 7) {
     this.maxTime = 5;
@@ -40,23 +32,13 @@ Board.prototype._calculateTime = function() {
   }
 };
 
-// Board.prototype.canClick = function() {
-//   if (this.array.length < 10) {
-//     if (this.tries < 3) {
-//       // console.log("hola")
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } else {
-//     if (this.tries < 6) {
-//       // console.log("hola")
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-// };
+Board.prototype._calculateTries = function() {
+  if (this.array.length === 7) {
+    this.maxTries = 3;
+  } else {
+    this.maxTries = 6;
+  }
+};
 
 Board.prototype._generatePotentialExit = function() {
   return [

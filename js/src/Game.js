@@ -1,9 +1,8 @@
 var Game = function(plan, player) {
-  // this.status = "initial";
   // this.savedScore = 0;
   this.isFinished = false;
   this.level = 0;
-  // this.map = map;
+  this.map = plan;
 };
 
 Game.prototype.stopFirstGame = function() {
@@ -15,11 +14,15 @@ Game.prototype.stopFirstGame = function() {
   var that = this;
   $('#continue').on('click', function() {
     $(".alert").remove();
-    that.restartGame();
+    if (that.level ===1 ){
+    that.restartGame(plan1);
+  } else {that.restartGame(plan2);}
   });
 };
 
 Game.prototype.finalScore = function() {
+  console.log(player1.score)
+  console.log(player2.score)
   if (player1.score > player2.score) {
     return "PLAYER 1 WIN!!";
   } else {
@@ -32,39 +35,41 @@ Game.prototype.stopSecondGame = function() {
   $("#board").append("<div></div>");
   var text = this.finalScore();
   $("#board").children().addClass("alert").text(text);
-  $(".alert").append("<button id='start'> Start New Game </button>");
+  $(".alert").append("<button id='start'> New Game </button>");
   var that = this;
-  $('#continue').on('click', function() {
+  $('#start').on('click', function() {
     $(".alert").remove();
     that.startNewGame();
   });
 };
 
-Game.prototype.restartGame = function() {
-  var board2 = new Board(plan2);
-  var player2 = new Player(board2);
+Game.prototype.restartGame = function(plan) {
+  var board2 = new Board(plan);
+  var player2 = new Player(board2, "player 2");
   var game2 = new Game(board2, player2);
+  game2.isFinished = true;
   game2.startGame(board2, player2);
-  this.isFinished = true;
 };
 
 Game.prototype.startNewGame = function() {
-
+  $("#right-panel").children().remove();
+  renderInitialScreen();
+  initialFunction();
 };
 
-Game.prototype.startGame = function(board, player) {
-  board.start();
-  var counter = board.maxTime;
-  renderBoard(board);
+Game.prototype.startGame = function(map, player) {
+  map.start();
+  var counter = map.maxTime;
+  renderBoard(map);
   var tries = 0;
   $(".horizontal-partition").click(function(e) {
     $(this).toggleClass("disabled");
     var col = parseInt($(this).parent().attr("col"));
     var row = parseInt($(this).parent().attr("row"));
     this.parentElement.isOpen = true;
-    board.tries += 1;
-    board.horMove(row, col);
-    board.printQuantityPeople();
+    map.tries += 1;
+    map.horMove(row, col);
+    map.printQuantityPeople();
     player.updateScore();
     tries += 1;
   });
@@ -74,9 +79,9 @@ Game.prototype.startGame = function(board, player) {
     var col = parseInt($(this).parent().attr("col"));
     var row = parseInt($(this).parent().attr("row"));
     this.parentElement.isOpen = true;
-    board.tries += 1;
-    board.verMove(row, col);
-    board.printQuantityPeople();
+    map.tries += 1;
+    map.verMove(row, col);
+    map.printQuantityPeople();
     player.updateScore();
     tries += 1;
   });
@@ -84,7 +89,7 @@ Game.prototype.startGame = function(board, player) {
 
   var that = this;
   var intervalId = setInterval(function() {
-    if (tries === board.maxTries) {
+    if (tries === map.maxTries) {
       counter = 0;
     }
     if (counter >= 0) {
@@ -102,25 +107,36 @@ Game.prototype.startGame = function(board, player) {
 
 };
 
-$(document).ready(function() {
-  renderInitialScreen();
+Game.prototype.calculatePath = function(plan) {
+  for (var i=1; i<plan.length-1; i+=2) {
+    for (var j=1; j<plan.length; j +=2) {
+  var path = new Path(plan[i][j], board.hallExit, plan);
+// console.log(path);
+}
+}
+};
 
+var initialFunction = function() {
   $('#level1').on('click', function() {
-    $("#initial").remove();
-    var board = new Board(plan1);
-    var player1 = new Player(board);
+    $(".initial-screen").remove();
+    var board1 = new Board(plan1);
+    var player1 = new Player(board1, "player 1");
     var game = new Game(board, player1);
-    game.startGame(board, player1);
+    game.startGame(board1, player1);
     game.level = 1;
   });
 
   $('#level2').on('click', function() {
-    $("#initial").remove();
-    var board = new Board(plan2);
-    var player1 = new Player(board);
+    $(".initial-screen").remove();
+    var board1 = new Board(plan2);
+    var player1 = new Player(board1, "player 1");
     var game = new Game(board, player1);
-    game.startGame(board, player1);
+    game.startGame(board1, player1);
     game.level = 2;
   });
+};
 
+$(document).ready(function() {
+  renderInitialScreen();
+  initialFunction();
 });

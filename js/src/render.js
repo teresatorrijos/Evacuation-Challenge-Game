@@ -80,7 +80,8 @@ function renderBoard(plan) {
 }
 
 function renderInitialScreen() {
-  $("#initial").append("<div></div>").text("Choose a level to start").addClass("initial-screen");
+  var initial = $("<div></div>").text("Choose a level to start").addClass("initial-screen");
+  $("#right-panel").append(initial);
   $(".initial-screen").append("<button id='level1'> Level 1 </button>");
   $(".initial-screen").append("<button id='level2'> Level 2 </button>");
 }

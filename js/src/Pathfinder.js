@@ -7,7 +7,7 @@ var Path = function(startArray, endArray, plan){
   for (var i = 0; i < plan.length; i++ ) {
     grid[i] = [];
     for (var j = 0; j < plan[i].length; j++ ) {
-      if (plan.map[i][j].type == "room" || plan.map[i][j].isOpen === true) {
+      if (plan[i][j].type == "room" || plan[i][j].isOpen === true) {
         grid[i][j] = 1;
       } else {
         grid[i][j] = 0;
