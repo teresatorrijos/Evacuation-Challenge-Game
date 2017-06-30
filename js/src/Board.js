@@ -13,7 +13,7 @@ var Board = function(plan) {
   this.array = plan;
   this.exit = {};
   this.positionExit = "";
-  this.potentialExit = this._generatePotentialExit();
+  // this.potentialExit = this._generatePotentialExit();
   this.interiorWalls = [];
   this.breakableWalls = [];
   this.partition = this.array.length ** 2;
@@ -22,6 +22,7 @@ var Board = function(plan) {
   this.maxTries = 0;
   this.hallExit = {};
   this.maxTime = 0;
+  // this.objectExit = {};
 };
 
 Board.prototype._calculateTime = function() {
@@ -78,8 +79,13 @@ Board.prototype._randomNumber = function(collection) {
 };
 
 Board.prototype._randomExit = function() {
+  for (var i=0; i<this.potentialExit.length; i++) {
+    this.potentialExit[i].isExit = false;
+  }
+  this.exit = {};
   var randomIndex = this._randomNumber(this.potentialExit);
   this.potentialExit[randomIndex].isExit = true;
+  // this.objectExit = this.potentialExit[randomIndex];
   var exitCoordinates = [{
     row: 0,
     col: this._middleCell()
@@ -198,6 +204,7 @@ Board.prototype.verMove = function(row, col) {
 };
 
 Board.prototype.start = function() {
+  this._generatePotentialExit();
   this._randomReleaseWalls();
   this._randomExit();
   this._generateHall();

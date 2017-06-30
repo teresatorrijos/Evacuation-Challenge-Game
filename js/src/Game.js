@@ -2,7 +2,7 @@ var Game = function(plan, player) {
   // this.savedScore = 0;
   this.isFinished = false;
   this.level = 0;
-  this.map = plan;
+  // this.map = plan;
 };
 
 Game.prototype.stopFirstGame = function() {
@@ -15,14 +15,14 @@ Game.prototype.stopFirstGame = function() {
   $('#continue').on('click', function() {
     $(".alert").remove();
     if (that.level ===1 ){
-    that.restartGame(plan1);
-  } else {that.restartGame(plan2);}
+    that.restartGame(plan3);
+  } else {that.restartGame(plan4);}
   });
 };
 
 Game.prototype.finalScore = function() {
-  console.log(player1.score)
-  console.log(player2.score)
+  // console.log(player1.score)
+  // console.log(player2.score)
   if (player1.score > player2.score) {
     return "PLAYER 1 WIN!!";
   } else {
@@ -59,6 +59,7 @@ Game.prototype.startNewGame = function() {
 
 Game.prototype.startGame = function(map, player) {
   map.start();
+  console.log(map)
   var counter = map.maxTime;
   renderBoard(map);
   var tries = 0;
