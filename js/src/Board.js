@@ -12,7 +12,6 @@ var Wall = function() {
 var Board = function(plan) {
   this.array = plan;
   this.exit = {};
-  this.positionExit = "";
   this.potentialExit = this._generatePotentialExit();
   this.interiorWalls = [];
   this.breakableWalls = [];
@@ -22,21 +21,14 @@ var Board = function(plan) {
   this.maxTries = 0;
   this.hallExit = {};
   this.maxTime = 0;
-  // this.objectExit = {};
 };
 
-Board.prototype._calculateTime = function() {
+Board.prototype._calculateSettings = function() {
   if (this.array.length === 7) {
     this.maxTime = 5;
-  } else {
-    this.maxTime = 10;
-  }
-};
-
-Board.prototype._calculateTries = function() {
-  if (this.array.length === 7) {
     this.maxTries = 3;
   } else {
+    this.maxTime = 10;
     this.maxTries = 6;
   }
 };
@@ -49,6 +41,7 @@ Board.prototype._generatePotentialExit = function() {
     this.array[this._middleCell()][0]
   ];
 };
+
 Board.prototype._middleCell = function() {
   return (this.array.length - 1) / 2;
 };
@@ -57,7 +50,7 @@ Board.prototype._lastCell = function() {
   return this.array.length - 1;
 };
 
-Board.prototype._randomReleaseWalls = function() {
+Board.prototype._generateBreakableWalls = function() {
   for (var i = 1; i < this.array.length - 1; i++) {
     for (var j = 1; j < this.array[i].length - 1; j++) {
       if (!this._isRoom(i, j)) {
@@ -78,14 +71,21 @@ Board.prototype._randomNumber = function(collection) {
   return Math.floor(Math.random() * collection.length);
 };
 
+Board.prototype._restartBoard = function() {
+  for (var i = 0; i < this.array.length; i++) {
+    for (var j = 0; j < this.array[i].length; j++) {
+      if (!this._isRoom(i, j)) {
+        this.array[i][j].canBreak = false;
+        this.array[i][j].isExit = false;
+        this.array[i][j].isOpen = false;
+      }
+    }
+  }
+};
+
 Board.prototype._randomExit = function() {
-  // for (var i=0; i<this.potentialExit.length; i++) {
-  //   this.potentialExit[i].isExit = false;
-  // }
-  this.exit = {};
   var randomIndex = this._randomNumber(this.potentialExit);
   this.potentialExit[randomIndex].isExit = true;
-  // this.objectExit = this.potentialExit[randomIndex];
   var exitCoordinates = [{
     row: 0,
     col: this._middleCell()
@@ -134,32 +134,40 @@ Board.prototype._generateHall = function() {
   }
 };
 
-Board.prototype._isRoom = function(i, j) {
-  return this.array[i][j].type === "room";
+Board.prototype._isRoom = function() {
+  for (var c = 0; c < this.array.length; c++) {
+    for (var d = 0; d < this.array[c].length; d++) {
+      if (this.array[c][d].type === "room") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 };
-Board.prototype.isBreakable = function(i, x) {
-  return this.array[i + 1][x].canBreak === true;
-};
-
-Board.prototype.getNumberPeople = function(i, x) {
-  return this.array[i + 1][x + 1].numberPeople;
-};
+// Board.prototype.isBreakable = function(i, x) {
+//   return this.array[i + 1][x].canBreak === true;
+// };
+//
+// Board.prototype.getNumberPeople = function(i, x) {
+//   return this.array[i + 1][x + 1].numberPeople;
+// };
 
 Board.prototype._fillRooms = function() {
-  for (var i = 1; i < this.array.length - 1; i++) {
-    for (var j = 1; j < this.array[i].length - 1; j++) {
-      if (this._isRoom(i, j)) {
-        this.rooms.push(this.array[i][j]);
+  for (var a = 1; a < this.array.length - 1; a++) {
+    for (var b = 1; b < this.array[a].length - 1; b++) {
+      if (this.array[a][b].type === "room") {
+        this.rooms.push(this.array[a][b]);
       }
     }
   }
   var randomQuantities = [];
-  for (var x = 0; x < this.rooms.length; x++) {
+  for (var z = 0; z < this.rooms.length; z++) {
     var quantity = (Math.floor(Math.random() * this.maximumCapacity) + 1);
     randomQuantities.push(quantity);
   }
-  for (var y = 0; y < this.rooms.length; y++) {
-    this.rooms[y].numberPeople = randomQuantities[y];
+  for (var t = 0; t < this.rooms.length; t++) {
+    this.rooms[t].numberPeople = randomQuantities[t];
   }
   this.hallExit.numberPeople = 0;
 };
@@ -167,16 +175,13 @@ Board.prototype._fillRooms = function() {
 Board.prototype.printQuantityPeople = function() {
   for (var i = 1; i < this.array.length - 1; i += 2) {
     for (var j = 1; j < this.array[i].length - 1; j += 2) {
-      if (this.array[i][j].numberPeople !==0) {
-      $("#" + i + "-" + j).html(this.array[i][j].numberPeople);
-    } else {
-      $("#" + i + "-" + j).empty();
-    }
+      if (this.array[i][j].numberPeople !== 0) {
+        $("#" + i + "-" + j).html(this.array[i][j].numberPeople);
+      } else {
+        $("#" + i + "-" + j).empty();
+      }
     }
   }
-};
-
-Board.prototype.checkWall = function(row, col) {
 };
 
 Board.prototype.horMove = function(row, col) {
@@ -204,11 +209,11 @@ Board.prototype.verMove = function(row, col) {
 };
 
 Board.prototype.start = function() {
-  // this._generatePotentialExit();
-  this._randomReleaseWalls();
+  this._isRoom();
+  this._restartBoard();
+  this._generateBreakableWalls();
   this._randomExit();
   this._generateHall();
   this._fillRooms();
-  this._calculateTries();
-  this._calculateTime();
+  this._calculateSettings();
 };
