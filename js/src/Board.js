@@ -11,16 +11,32 @@ var Wall = function() {
 
 var Board = function(plan) {
   this.array = plan;
+  this.grid = [];
   this.exit = {};
+  this.positionExit = "";
   this.potentialExit = this._generatePotentialExit();
   this.interiorWalls = [];
   this.breakableWalls = [];
-  this.partition = this.array.length ** 2;
+  this.partition = this.array.length ** 2 +20;
   this.rooms = [];
   this.maximumCapacity = 20;
   this.maxTries = 0;
   this.hallExit = {};
+  this.hallCoord = {};
   this.maxTime = 0;
+};
+
+Board.prototype.updateGrid = function() {
+  for (var i = 0; i < this.array.length; i++ ) {
+    this.grid[i] = [];
+    for (var j = 0; j < this.array[i].length; j++ ) {
+      if (this.array[i][j].type == "room" || this.array[i][j].isOpen === true) {
+        this.grid[i][j] = 1;
+      } else {
+        this.grid[i][j] = 0;
+      }
+    }
+  }
 };
 
 Board.prototype._calculateSettings = function() {
@@ -121,15 +137,35 @@ Board.prototype._generateHall = function() {
   switch (this.positionExit) {
     case "up":
       this.hallExit = this.array[1][this._middleCell()];
+      this.hallCoord = {
+        row: 1,
+        col: this._middleCell()
+      };
+      this.array[1][this._middleCell()-1].canBreak = true;
       break;
     case "right":
       this.hallExit = this.array[this._middleCell()][this._lastCell() - 1];
+      this.hallCoord = {
+        row: this._middleCell(),
+        col: this._lastCell() - 1
+      };
+      this.array[this._middleCell()-1][this._lastCell() - 1].canBreak = true;
       break;
     case "down":
       this.hallExit = this.array[this._lastCell() - 1][this._middleCell()];
+      this.hallCoord = {
+        row: this._lastCell() - 1,
+        col: this._middleCell()
+      };
+      this.array[this._lastCell() - 1][this._middleCell()+1].canBreak = true;
       break;
     case "left":
       this.hallExit = this.array[this._middleCell()][1];
+      this.hallCoord = {
+        row: this._middleCell(),
+        col: 1
+      };
+      this.array[this._middleCell()+1][1].canBreak = true;
       break;
   }
 };
@@ -145,13 +181,6 @@ Board.prototype._isRoom = function() {
     }
   }
 };
-// Board.prototype.isBreakable = function(i, x) {
-//   return this.array[i + 1][x].canBreak === true;
-// };
-//
-// Board.prototype.getNumberPeople = function(i, x) {
-//   return this.array[i + 1][x + 1].numberPeople;
-// };
 
 Board.prototype._fillRooms = function() {
   for (var a = 1; a < this.array.length - 1; a++) {

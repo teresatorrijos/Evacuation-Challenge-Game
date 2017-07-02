@@ -27,7 +27,7 @@ Game.prototype.stopFirstGame = function() {
 };
 
 Game.prototype.finalScore = function() {
-  if (player1Score>player2Score) {
+  if (player1Score > player2Score) {
     return "PLAYER 1 WIN!!";
   } else {
     return "PLAYER 2 WIN!!";
@@ -63,8 +63,24 @@ Game.prototype.startNewGame = function() {
   initialFunction();
 };
 
+Game.prototype.checkPath = function() {
+  var graph = new Graph(this.plan.grid);
+  var end = graph.grid[this.plan.hallCoord.row][this.plan.hallCoord.col];
+  var result;
+  for (var i = 1; i < graph.grid.length - 1; i += 2) {
+    for (var j = 1; j < graph.grid.length - 1; j += 2) {
+      result = astar.search(graph, graph.grid[i][j], end);
+      if (result.length !== 0) {
+        this.plan.hallExit.numberPeople += this.plan.array[i][j].numberPeople;
+        this.plan.array[i][j].numberPeople = 0;
+      }
+    }
+  } console.log(result);
+};
+
 Game.prototype.startGame = function(map, player) {
   map.start();
+  var that=this;
   var counter = map.maxTime;
   renderBoard(map);
   var tries = 0;
@@ -72,58 +88,54 @@ Game.prototype.startGame = function(map, player) {
     $(this).toggleClass("disabled");
     var col = parseInt($(this).parent().attr("col"));
     var row = parseInt($(this).parent().attr("row"));
-    this.parentElement.isOpen = true;
+    map.array[row][col].isOpen = true;
+    console.log(map.array[row][col].isOpen);
     map.tries += 1;
     map.horMove(row, col);
-    map.printQuantityPeople();
+    map.updateGrid();
     player.updateScore();
     tries += 1;
+    that.checkPath();
+    map.printQuantityPeople();
   });
 
   $(".vertical-partition").click(function(e) {
     $(this).toggleClass("disabled");
     var col = parseInt($(this).parent().attr("col"));
     var row = parseInt($(this).parent().attr("row"));
-    this.parentElement.isOpen = true;
+    map.array[row][col].isOpen = true;
     map.tries += 1;
     map.verMove(row, col);
-    map.printQuantityPeople();
+    map.updateGrid();
     player.updateScore();
     tries += 1;
+    that.checkPath();
+    map.printQuantityPeople();
+
   });
 
 
-  var that = this;
-  var intervalId = setInterval(function() {
-    if (tries >= map.maxTries) {
-      counter = 0;
-    }
-    if (counter > 0) {
-      $("#timer").html(counter);
-    } else {
-      clearInterval(intervalId);
-      if (that.isFinished === false) {
-        $("#timer").html(counter);
-        that.stopFirstGame();
-      } else {
-        $("#timer").html(counter);
-        that.stopSecondGame();
-      }
-    }
-    counter--;
-  }, 1000);
+  // var that = this;
+  // var intervalId = setInterval(function() {
+  //   if (tries >= map.maxTries) {
+  //     counter = 0;
+  //   }
+  //   if (counter > 0) {
+  //     $("#timer").html(counter);
+  //   } else {
+  //     clearInterval(intervalId);
+  //     if (that.isFinished === false) {
+  //       $("#timer").html(counter);
+  //       that.stopFirstGame();
+  //     } else {
+  //       $("#timer").html(counter);
+  //       that.stopSecondGame();
+  //     }
+  //   }
+  //   counter--;
+  // }, 1000);
 
 };
-
-
-Game.prototype.calculatePath = function(plan) {
-  for (var i = 1; i < plan.length - 1; i += 2) {
-    for (var j = 1; j < plan.length; j += 2) {
-      var path = new Path(plan[i][j], board.hallExit, plan);
-    }
-  }
-};
-
 
 var initialFunction = function() {
   $('#level1').on('click', function() {
