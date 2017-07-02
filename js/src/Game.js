@@ -2,6 +2,7 @@ var Game = function(map, player) {
   this.isFinished = false;
   this.level = 0;
   this.player = player;
+  this.plan = map;
 };
 
 var player1Score = 0;
