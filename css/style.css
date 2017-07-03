@@ -176,13 +176,11 @@ button {
 .alert {
   text-align: center;
   width: 700px;
-  height: 450px;
+  height: 400px;
   font-size: 25px;
   border: 1px black solid;
   line-height: 200px;
   padding-top: 70px;
-  margin-top: 20px;
-
 }
 
 .gif-box {
