@@ -84,4 +84,7 @@ function renderInitialScreen() {
   $("#right-panel").append(initial);
   $(".initial-screen").append("<button id='level1'> Level 1 </button>");
   $(".initial-screen").append("<button id='level2'> Level 2 </button>");
+  var gif = $("<div></div>").text("").addClass("gif-box");
+  $("#board").append(gif);
+  $(".gif-box").append("<img id='gif' src='img/gif-juego.gif'> </img>");
 }

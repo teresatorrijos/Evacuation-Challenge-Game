@@ -17,7 +17,7 @@ var Board = function(plan) {
   this.potentialExit = this._generatePotentialExit();
   this.interiorWalls = [];
   this.breakableWalls = [];
-  this.partition = this.array.length ** 2 +20;
+  this.partition = this.array.length * this.array.length -10;
   this.rooms = [];
   this.maximumCapacity = 20;
   this.maxTries = 0;
@@ -42,10 +42,10 @@ Board.prototype.updateGrid = function() {
 Board.prototype._calculateSettings = function() {
   if (this.array.length === 7) {
     this.maxTime = 5;
-    this.maxTries = 3;
+    this.maxTries = 4;
   } else {
     this.maxTime = 10;
-    this.maxTries = 6;
+    this.maxTries = 7;
   }
 };
 

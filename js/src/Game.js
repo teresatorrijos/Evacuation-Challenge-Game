@@ -93,10 +93,10 @@ Game.prototype.startGame = function(map, player) {
     map.tries += 1;
     map.horMove(row, col);
     map.updateGrid();
-    player.updateScore();
     tries += 1;
     that.checkPath();
     map.printQuantityPeople();
+    player.updateScore();
   });
 
   $(".vertical-partition").click(function(e) {
@@ -107,33 +107,33 @@ Game.prototype.startGame = function(map, player) {
     map.tries += 1;
     map.verMove(row, col);
     map.updateGrid();
-    player.updateScore();
     tries += 1;
     that.checkPath();
     map.printQuantityPeople();
+    player.updateScore();
 
   });
 
 
-  // var that = this;
-  // var intervalId = setInterval(function() {
-  //   if (tries >= map.maxTries) {
-  //     counter = 0;
-  //   }
-  //   if (counter > 0) {
-  //     $("#timer").html(counter);
-  //   } else {
-  //     clearInterval(intervalId);
-  //     if (that.isFinished === false) {
-  //       $("#timer").html(counter);
-  //       that.stopFirstGame();
-  //     } else {
-  //       $("#timer").html(counter);
-  //       that.stopSecondGame();
-  //     }
-  //   }
-  //   counter--;
-  // }, 1000);
+  var thats = this;
+  var intervalId = setInterval(function() {
+    if (tries >= map.maxTries) {
+      counter = 0;
+    }
+    if (counter > 0) {
+      $("#timer").html(counter);
+    } else {
+      clearInterval(intervalId);
+      if (thats.isFinished === false) {
+        $("#timer").html(counter);
+        thats.stopFirstGame();
+      } else {
+        $("#timer").html(counter);
+        thats.stopSecondGame();
+      }
+    }
+    counter--;
+  }, 1000);
 
 };
 
