@@ -1,15 +1,15 @@
 body {
   background-color: #FFF1EB;
-  font-family: Helvetica, Times, serif;
+  font: 200 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: lighter;
 }
 
 h1 {
   color: black;
-  font-size: 35px;
+  font-size: 45px;
   margin-left: 30px;
   margin-top: 30px;
-  /*font-weight: lighter;*/
+  font-weight: lighter;
 }
 
 #board {
@@ -111,9 +111,9 @@ h1 {
 
 #right-panel {
   position: absolute;
-  top: 150px;
-  left: 30px;
-  width: 350px;
+  top: 120px;
+  left: 22px;
+  width: 380px;
 }
 
 #timer {
@@ -144,13 +144,25 @@ h1 {
 .initial-screen {
   font-size: 25px;
   border: 1px black solid;
-  width: 320px;
-  height: 170px;
+  width: 340px;
+  height: 100px;
   text-align: center;
-  padding: 100px 10px;
+  padding: 30px 10px;
+  position: absolute;
+  left: 20px;
+  top: 260px;
+}
+
+.initial-description {
+  font-size: 20px;
+  font-weight: lighter;
+  height: 100px;
+  padding-top: 35px;
+  padding-left: 10px;
   position: absolute;
   left: 10px;
 }
+
 
 button {
   padding: 10px 12px;
@@ -170,8 +182,17 @@ button {
 }
 
 #level1 {
-  margin-top: 60px;
+  position: absolute;
+  top: 60px;
+  left: 53px;
 }
+
+#level2 {
+  position: absolute;
+  top: 60px;
+  left: 205px;
+}
+
 
 .alert {
   text-align: center;

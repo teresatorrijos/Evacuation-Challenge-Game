@@ -80,7 +80,11 @@ function renderBoard(plan) {
 }
 
 function renderInitialScreen() {
+  var description = $("<div></div>").text("Try to rescue people from a burning building! You have to break thin walls by clicking them and help people reach the exit. A certain amount of clicks is restricted for each level and time is so short. So... hurry up!").addClass("initial-description");
+
   var initial = $("<div></div>").text("Choose a level to start").addClass("initial-screen");
+  $("#right-panel").append(description);
+
   $("#right-panel").append(initial);
   $(".initial-screen").append("<button id='level1'> Level 1 </button>");
   $(".initial-screen").append("<button id='level2'> Level 2 </button>");
